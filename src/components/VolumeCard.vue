@@ -37,12 +37,12 @@ export default {
   },
 
   methods: {
-    setCursorCoords({ x, y }) {
+    setCursorCoords({ offsetX, offsetY }) {
       const centerX = this.$el.clientWidth / 2;
       const centerY = this.$el.clientHeight / 2;
 
-      this.rotateX = y - centerY;
-      this.rotateY = centerX - x;
+      this.rotateX = offsetY - centerY;
+      this.rotateY = centerX - offsetX;
 
       const radius = Math.hypot(this.rotateX, this.rotateY);
       const maxRadius = Math.hypot(this.rotateX, centerY);
@@ -76,6 +76,8 @@ export default {
 <style lang="scss" scoped>
 .volumeCard {
   position: relative;
+  margin: 0;
+
   .inner {
     transform-style: preserve-3d;
     transition: transform 1s;
