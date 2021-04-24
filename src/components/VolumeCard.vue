@@ -7,11 +7,11 @@ export default {
   props: {
     width: {
       type: String,
-      default: "540px",
+      default: "360px",
     },
     height: {
       type: String,
-      default: "960px",
+      default: "640px",
     },
     perspective: {
       type: String,

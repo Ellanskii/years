@@ -1,8 +1,8 @@
 <template>
   <section class="yearsContainer">
+    <Year2009 />
+    <Year2009 />
     <Year2010 />
-    <Year2009 />
-    <Year2009 />
   </section>
 </template>
 

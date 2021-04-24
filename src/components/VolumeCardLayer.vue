@@ -5,11 +5,11 @@ export default {
   props: {
     width: {
       type: Number,
-      default: 540,
+      default: 360,
     },
     height: {
       type: Number,
-      default: 960,
+      default: 640,
     },
     src: {
       type: String,
