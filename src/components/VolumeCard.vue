@@ -63,7 +63,7 @@ export default {
     <slot name="background"></slot>
     <div
       class="inner"
-      :style="{ '--transform': transform, transform: transformed && transform, width, height }"
+      :style="{ transform: transformed && transform, width, height }"
     >
       <slot name="default"></slot>
     </div>
