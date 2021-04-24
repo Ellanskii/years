@@ -3,7 +3,7 @@ import VolumeCard from "@/components/VolumeCard";
 import VolumeCardLayer from "@/components/VolumeCardLayer";
 
 export default {
-  name: "Year2009",
+  name: "Year2007",
 
   components: {
     VolumeCard,
@@ -13,14 +13,8 @@ export default {
   data: () => ({
     layers: [
       { name: "frame", elevation: 1 },
-      { name: "leftHand", elevation: 4 },
-      { name: "cocktail", elevation: 2 },
-      { name: "rightHand", elevation: 5 },
-      { name: "leafOne", elevation: 4 },
-      { name: "stem2", elevation: 6 },
-      { name: "leafs", elevation: 6 },
-      { name: "flowers", elevation: 6 },
-      { name: "flower", elevation: 8 },
+      { name: "girl", elevation: 4 },
+      { name: "blazer", elevation: 8 },
       { name: "stars", elevation: 15 },
     ],
   }),
@@ -30,12 +24,12 @@ export default {
 <template>
   <VolumeCard>
     <template #background>
-      <VolumeCardLayer src="/cards/2009/background.png" />
+      <VolumeCardLayer src="/cards/2007/background.png" />
     </template>
     <VolumeCardLayer
       v-for="(layer, index) in layers"
       :key="index"
-      :src="`/cards/2009/${layer.name}.png`"
+      :src="`/cards/2007/${layer.name}.png`"
       :elevation="layer.elevation"
     />
   </VolumeCard>

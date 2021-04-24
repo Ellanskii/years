@@ -1,17 +1,19 @@
 <template>
   <section class="yearsContainer">
-    <Year2009 />
+    <Year2007 />
     <Year2009 />
     <Year2010 />
   </section>
 </template>
 
 <script>
+import Year2007 from "./components/years/Year2007";
 import Year2009 from "./components/years/Year2009";
 import Year2010 from "./components/years/Year2010";
 
 export default {
   components: {
+    Year2007,
     Year2009,
     Year2010,
   },
