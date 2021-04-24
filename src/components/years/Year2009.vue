@@ -21,7 +21,7 @@ export default {
       { name: "leafs", elevation: 6 },
       { name: "flowers", elevation: 6 },
       { name: "flower", elevation: 8 },
-      { name: "stars", elevation: 10 },
+      { name: "stars", elevation: 15 },
     ],
   }),
 };

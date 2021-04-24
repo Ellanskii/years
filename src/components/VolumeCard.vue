@@ -1,4 +1,6 @@
 <script>
+import { throttle, debounce } from "lodash";
+
 export default {
   name: "VolumeCard",
 
@@ -11,25 +13,40 @@ export default {
       type: String,
       default: "960px",
     },
+    perspective: {
+      type: String,
+      default: "1000px",
+    },
+    maxAngle: {
+      type: Number,
+      default: 45,
+    },
   },
 
   data: () => ({
-    top: 0,
-    left: 0,
+    rotateX: 0,
+    rotateY: 0,
     angle: 20,
     transformed: false,
   }),
 
   computed: {
     transform() {
-      return `rotate3d(${this.left}, ${this.top}, 0, ${this.angle}deg)`;
+      return `rotate3d(${this.rotateX}, ${this.rotateY}, 0, ${this.angle}deg)`;
     },
   },
 
   methods: {
-    setCursorCoords(event) {
-      this.top = event.y < this.$el.clientHeight / 2 ? "1" : "-1";
-      this.left = event.x < this.$el.clientWidth / 2 ? "-1" : "1";
+    setCursorCoords({ x, y }) {
+      const centerX = this.$el.clientWidth / 2;
+      const centerY = this.$el.clientHeight / 2;
+
+      this.rotateX = y - centerY;
+      this.rotateY = centerX - x;
+
+      const radius = Math.hypot(this.rotateX, this.rotateY);
+      const maxRadius = Math.hypot(this.rotateX, centerY);
+      this.angle = (this.maxAngle * radius) / maxRadius;
     },
   },
 };
@@ -41,12 +58,12 @@ export default {
     @mousemove="setCursorCoords"
     @mouseenter="transformed = true"
     @mouseleave="transformed = null"
-    :style="{ width, height }"
+    :style="{ width, height, perspective }"
   >
     <slot name="background"></slot>
     <div
       class="inner"
-      :style="{ transform: transformed && transform, width, height }"
+      :style="{ '--transform': transform, transform: transformed && transform, width, height }"
     >
       <slot name="default"></slot>
     </div>
@@ -62,6 +79,9 @@ export default {
   .inner {
     transform-style: preserve-3d;
     transition: transform 1s;
+    &:hover {
+      transition: none;
+    }
   }
 
   ::v-deep .volumeCardLayer {
@@ -70,4 +90,5 @@ export default {
     left: 0;
   }
 }
+
 </style>
