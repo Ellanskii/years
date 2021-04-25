@@ -68,7 +68,7 @@ export default {
 </script>
 
 <template>
-  <VolumeCard @toggle="isActive = !isActive">
+  <VolumeCard :width="width" :height="height" @toggle="isActive = !isActive">
     <template #background>
       <VolumeCardLayer
         src="/cards/2011/background.png"

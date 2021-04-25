@@ -33,7 +33,7 @@ export default {
 </script>
 
 <template>
-  <VolumeCard>
+  <VolumeCard :width="width" :height="height">
     <template #background>
       <VolumeCardLayer
         :width="width"

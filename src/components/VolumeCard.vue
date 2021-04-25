@@ -4,16 +4,16 @@ export default {
 
   props: {
     width: {
-      type: String,
-      default: "360px",
+      type: Number,
+      default: 360,
     },
     maxWidth: {
       type: String,
       default: "100%",
     },
     height: {
-      type: String,
-      default: "640px",
+      type: Number,
+      default: 640,
     },
     perspective: {
       type: String,
@@ -21,7 +21,11 @@ export default {
     },
     maxAngle: {
       type: Number,
-      default: 45,
+      default: 30,
+    },
+    touchDelay: {
+      type: Number,
+      default: 100,
     },
   },
 
@@ -29,42 +33,136 @@ export default {
     rotateX: 0,
     rotateY: 0,
     angle: 0,
-    transformed: false,
+    transformed: null,
+    touch: null,
+    scrollBlocked: true,
   }),
 
   computed: {
     transform() {
       return `rotate3d(${this.rotateX}, ${this.rotateY}, 0, ${this.angle}deg)`;
     },
+    wrapperStyle() {
+      const style = {
+        perspective: this.perspective,
+        "touch-action": this.scrollBlocked ? "none" : null,
+      };
+      return style;
+    },
   },
 
   methods: {
-    setCursorCoords({ offsetX, offsetY }) {
-      const centerX = this.$el.clientWidth / 2;
-      const centerY = this.$el.clientHeight / 2;
+    mouseMove({ offsetX, offsetY }) {
+      // const centerX = this.$el.clientWidth / 2;
+      // const centerY = this.$el.clientHeight / 2;
 
-      this.rotateX = offsetY - centerY;
-      this.rotateY = centerX - offsetX;
+      this.setTransformation(offsetX, offsetY);
 
-      const radius = Math.hypot(this.rotateX, this.rotateY);
-      const maxRadius = Math.hypot(this.rotateX, centerY);
-      const angle = (this.maxAngle * radius) / maxRadius;
-      this.angle = angle > this.maxAngle ? this.maxAngle : angle
+      // this.rotateX = offsetY - centerY;
+      // this.rotateY = centerX - offsetX;
+
+      // const radius = Math.hypot(this.rotateX, this.rotateY);
+      // const maxRadius = Math.hypot(centerX, centerY);
+      // const angle = (this.maxAngle * radius) / maxRadius;
+      // this.angle = angle > this.maxAngle ? this.maxAngle : angle;
     },
+
     getTouchCoords(e) {
-      const touch = e.touches[0]
-      const rect = touch.target.getBoundingClientRect();
-      const offsetX = touch.pageX - rect.x;
-      const offsetY = touch.pageY - rect.y;
+      if (!this.touch) return;
 
-      this.setCursorCoords({ offsetX, offsetY });
+      if (this.touch.isMoving) {
+        e.preventDefault();
+
+        // block scroll
+        document.querySelector("html").classList.add("no-scroll");
+
+        const touch = e.touches[0];
+
+        const rect = touch.target.getBoundingClientRect();
+        const offsetX = touch.pageX - rect.x;
+        const offsetY = touch.pageY - rect.y;
+
+        this.setCursorCoords({ offsetX, offsetY });
+      } else if (e.timeStamp - this.touch.timeStamp > this.touchDelay) {
+        this.touch.isMoving = true;
+        this.transformed = true;
+      } else {
+        this.touch = null;
+      }
     },
-    mouseEnter() {
+
+    touchMove(e) {
+      if (!this.touch) return;
+
+      // FIXME нужно что-то решать со скроллом
+      if (true) {
+        // if (this.touch.isMoving || e.timeStamp - this.touch.timeStamp > this.touchDelay) {
+
+        this.touch.isMoving = true;
+
+        // block scroll
+        // document.querySelector("body").classList.add("no-scroll");
+
+        // FIXME реальная дельта выглядит вяленько, пока пусть будет множитель
+        // const offsetX = e.changedTouches[0].clientX * 2;
+        // const offsetY = e.changedTouches[0].clientY * 2;
+        const offsetX = e.changedTouches[0].clientX;
+        const offsetY = e.changedTouches[0].clientY;
+        const centerX = this.touch.clientX;
+        const centerY = this.touch.clientY;
+
+        this.setTransformation(offsetX, offsetY, centerX, centerY);
+      } else {
+        this.touch = null;
+      }
+    },
+
+    touchStart(e) {
+      // this.scrollBlocked = true
+      this.touch = e.targetTouches[0];
+      this.touch.timeStamp = e.timeStamp;
+    },
+
+    touchEnd() {
+      this.touch = null;
+      // this.scrollBlocked = false
+      // document.querySelector("body").classList.remove("no-scroll");
+      this.cardLeave();
+    },
+
+    setTransformation(
+      offsetX,
+      offsetY,
+      centerX = this.width / 2,
+      centerY = this.height / 2
+    ) {
+      const rotateX = offsetY - centerY;
+      const rotateY = centerX - offsetX;
+      const radius = Math.hypot(rotateX, rotateY);
+      const maxRadius = Math.hypot(centerX, rotateX);
+      const angle = (this.maxAngle * radius) / maxRadius;
+
+      this.rotateX = rotateX;
+      this.rotateY = rotateY;
+      this.angle = Math.abs(angle > this.maxAngle) ? this.maxAngle : angle;
+
       this.transformed = true;
+    },
+
+    clearTransformation() {
+      this.transformed = null;
+      this.angle = 0;
+      this.rotateX = 0;
+      this.rotateY = 0;
+    },
+
+    cardEnter(e) {
+      // this.transformed = true;
       this.$emit("toggle");
     },
-    mouseLeave() {
-      this.transformed = null;
+
+    cardLeave() {
+      this.clearTransformation();
       this.$emit("toggle");
     },
   },
@@ -74,13 +172,13 @@ export default {
 <template>
   <figure
     class="volumeCard"
-    @mousemove="setCursorCoords"
-    @mouseenter="mouseEnter"
-    @mouseleave="mouseLeave"
-    @touchmove="getTouchCoords"
-    @touchstart="mouseEnter"
-    @touchend="mouseLeave"
-    :style="{ perspective }"
+    @mousemove="mouseMove"
+    @mouseenter="cardEnter"
+    @mouseleave="cardLeave"
+    @touchmove.stop="touchMove"
+    @touchstart.stop="touchStart"
+    @touchend="touchEnd"
+    :style="wrapperStyle"
   >
     <slot name="background"></slot>
     <div class="inner" :style="{ transform: transformed && transform }">
@@ -95,7 +193,7 @@ export default {
 <style lang="scss" scoped>
 .volumeCard {
   position: relative;
-  touch-action: none;
+  // touch-action: none;
   margin: 0 auto;
   width: 100%;
   padding-top: 1920px / 1080px * 100%;

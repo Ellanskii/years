@@ -48,11 +48,16 @@ export default {
 
 
 <style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 :root {
-  --page-padding: 10px;
+  --page-padding: 56px;
   --gap: 56px;
-  --min-card-width: 250px;
-  
+  --min-card-width: 200px;
+
   @media screen and (min-width: 420px) {
     --gap: 48px;
     --page-padding: 56px;
@@ -61,7 +66,7 @@ export default {
   @media screen and (min-width: 1024px) {
     --gap: 56px;
     --page-padding: 72px;
-    --min-card-width: 360px;
+    --min-card-width: 320px;
   }
 }
 
@@ -83,5 +88,12 @@ html {
   // max-width: 1360px;
   grid-template-columns: repeat(auto-fill, minmax(var(--min-card-width), 1fr));
   margin: 0 auto;
+}
+
+.no-scroll {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  position: fixed;
 }
 </style>
