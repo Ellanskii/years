@@ -26,7 +26,7 @@ export default {
   data: () => ({
     rotateX: 0,
     rotateY: 0,
-    angle: 20,
+    angle: 0,
     transformed: false,
   }),
 
