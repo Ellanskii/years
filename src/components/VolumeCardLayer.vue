@@ -35,7 +35,7 @@ export default {
 
 <template>
   <img
-    :src="src"
+    :src="require(`@/assets${src}`)"
     alt=""
     :width="width"
     :height="height"
