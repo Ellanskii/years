@@ -24,11 +24,11 @@ export default {
   computed: {
     transform() {
       if (this.elevation) {
-        return `translateZ(${this.elevation * 10}px)`
+        return `translateZ(${this.elevation * 10}px)`;
       } else {
-        return {}
+        return {};
       }
-    }
+    },
   },
 };
 </script>
