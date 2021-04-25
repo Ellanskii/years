@@ -12,10 +12,10 @@ export default {
 
   data: () => ({
     layers: [
-      { name: "stars", elevation: -10 },
-      { name: "frame", elevation: 1 },
       { name: "girl", elevation: -8 },
       { name: "blazer", elevation: -4 },
+      { name: "frame", elevation: 1 },
+      { name: "stars", elevation: 10 },
     ],
   }),
 };

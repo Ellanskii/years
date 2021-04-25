@@ -48,6 +48,14 @@ export default {
       const maxRadius = Math.hypot(this.rotateX, centerY);
       this.angle = (this.maxAngle * radius) / maxRadius;
     },
+    mouseEnter() {
+      this.transformed = true
+      this.$emit('toggle')
+    },
+    mouseLeave() {
+      this.transformed = null
+      this.$emit('toggle')
+    },
   },
 };
 </script>
@@ -56,8 +64,8 @@ export default {
   <figure
     class="volumeCard"
     @mousemove="setCursorCoords"
-    @mouseenter="transformed = true"
-    @mouseleave="transformed = null"
+    @mouseenter="mouseEnter"
+    @mouseleave="mouseLeave"
     :style="{ width, height, perspective }"
   >
     <slot name="background"></slot>
@@ -82,7 +90,7 @@ export default {
     transform-style: preserve-3d;
     transition: transform 1s;
     &:hover {
-      transition: none;
+      transition: transform .1s;
     }
   }
 
