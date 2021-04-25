@@ -1,6 +1,4 @@
 <script>
-import { throttle, debounce } from "lodash";
-
 export default {
   name: "VolumeCard",
 
@@ -8,6 +6,10 @@ export default {
     width: {
       type: String,
       default: "360px",
+    },
+    maxWidth: {
+      type: String,
+      default: "100%",
     },
     height: {
       type: String,
@@ -49,12 +51,12 @@ export default {
       this.angle = (this.maxAngle * radius) / maxRadius;
     },
     mouseEnter() {
-      this.transformed = true
-      this.$emit('toggle')
+      this.transformed = true;
+      this.$emit("toggle");
     },
     mouseLeave() {
-      this.transformed = null
-      this.$emit('toggle')
+      this.transformed = null;
+      this.$emit("toggle");
     },
   },
 };
@@ -66,13 +68,10 @@ export default {
     @mousemove="setCursorCoords"
     @mouseenter="mouseEnter"
     @mouseleave="mouseLeave"
-    :style="{ width, height, perspective }"
+    :style="{perspective}"
   >
     <slot name="background"></slot>
-    <div
-      class="inner"
-      :style="{ transform: transformed && transform, width, height }"
-    >
+    <div class="inner" :style="{ transform: transformed && transform }">
       <slot name="default"></slot>
     </div>
     <figcaption>
@@ -84,21 +83,29 @@ export default {
 <style lang="scss" scoped>
 .volumeCard {
   position: relative;
-  margin: 0;
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 1920px / 1080px * 100%;
 
   .inner {
-    transform-style: preserve-3d;
-    transition: transform 1s;
-    &:hover {
-      transition: transform .1s;
-    }
-  }
-
-  ::v-deep .volumeCardLayer {
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    &:hover {
+      transition: transform 0.1s;
+    }
+  }
+
+  :deep .volumeCardLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
-
 </style>

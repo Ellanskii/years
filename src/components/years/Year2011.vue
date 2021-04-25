@@ -10,6 +10,17 @@ export default {
     VolumeCardLayer,
   },
 
+  props: {
+    width: {
+      type: Number,
+      default: 360,
+    },
+    height: {
+      type: Number,
+      default: 640,
+    },
+  },
+
   data: () => ({
     isActive: false,
     layers: [
@@ -59,7 +70,11 @@ export default {
 <template>
   <VolumeCard @toggle="isActive = !isActive">
     <template #background>
-      <VolumeCardLayer src="/cards/2011/background.png" />
+      <VolumeCardLayer
+        src="/cards/2011/background.png"
+        :width="width"
+        :height="height"
+      />
     </template>
     <VolumeCardLayer
       v-for="(layer, index) in layers"
@@ -67,6 +82,8 @@ export default {
       :src="`/cards/2011/${layer.name}.png`"
       :elevation="layer.elevation"
       :style="[layer.style, isActive && layer.activeStyle]"
+      :width="width"
+      :height="height"
     />
   </VolumeCard>
 </template>
