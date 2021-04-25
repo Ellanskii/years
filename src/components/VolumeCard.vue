@@ -48,11 +48,15 @@ export default {
 
       const radius = Math.hypot(this.rotateX, this.rotateY);
       const maxRadius = Math.hypot(this.rotateX, centerY);
-      this.angle = (this.maxAngle * radius) / maxRadius;
+      const angle = (this.maxAngle * radius) / maxRadius;
+      this.angle = angle > this.maxAngle ? this.maxAngle : angle
     },
     getTouchCoords(e) {
-      const offsetX = e.touches[0].pageX - e.touches[0].target.offsetLeft;
-      const offsetY = e.touches[0].pageY - e.touches[0].target.offsetTop;
+      const touch = e.touches[0]
+      const rect = touch.target.getBoundingClientRect();
+      const offsetX = touch.pageX - rect.x;
+      const offsetY = touch.pageY - rect.y;
+
       this.setCursorCoords({ offsetX, offsetY });
     },
     mouseEnter() {
