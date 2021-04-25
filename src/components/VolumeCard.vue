@@ -50,6 +50,11 @@ export default {
       const maxRadius = Math.hypot(this.rotateX, centerY);
       this.angle = (this.maxAngle * radius) / maxRadius;
     },
+    getTouchCoords(e) {
+      const offsetX = e.touches[0].pageX - e.touches[0].target.offsetLeft;
+      const offsetY = e.touches[0].pageY - e.touches[0].target.offsetTop;
+      this.setCursorCoords({ offsetX, offsetY });
+    },
     mouseEnter() {
       this.transformed = true;
       this.$emit("toggle");
@@ -68,7 +73,10 @@ export default {
     @mousemove="setCursorCoords"
     @mouseenter="mouseEnter"
     @mouseleave="mouseLeave"
-    :style="{perspective}"
+    @touchmove="getTouchCoords"
+    @touchstart="mouseEnter"
+    @touchend="mouseLeave"
+    :style="{ perspective }"
   >
     <slot name="background"></slot>
     <div class="inner" :style="{ transform: transformed && transform }">
@@ -83,6 +91,7 @@ export default {
 <style lang="scss" scoped>
 .volumeCard {
   position: relative;
+  touch-action: none;
   margin: 0 auto;
   width: 100%;
   padding-top: 1920px / 1080px * 100%;

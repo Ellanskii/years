@@ -21,7 +21,7 @@ export default {
   computed: {
     cardHeight() {
       return this.cardWidth * 1.77777777778; // 16/9
-    }
+    },
   },
 
   methods: {
@@ -49,13 +49,25 @@ export default {
 
 <style lang="scss">
 :root {
-  --gap: 24px;
-  @media screen and (min-width: 720px) {
+  --page-padding: 10px;
+  --gap: 56px;
+  --min-card-width: 250px;
+  
+  @media screen and (min-width: 420px) {
+    --gap: 48px;
+    --page-padding: 56px;
+    --min-card-width: 300px;
+  }
+  @media screen and (min-width: 1024px) {
     --gap: 56px;
+    --page-padding: 72px;
+    --min-card-width: 360px;
   }
 }
+
 html {
   background: #232127;
+  padding: var(--page-padding);
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -63,14 +75,13 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: calc(var(--gap) * 1.5);
 }
 
 .yearsContainer {
   display: grid;
   gap: var(--gap);
   // max-width: 1360px;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--min-card-width), 1fr));
   margin: 0 auto;
 }
 </style>
