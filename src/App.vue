@@ -3,6 +3,7 @@
     <Year2007 />
     <Year2009 />
     <Year2010 />
+    <Year2011 />
   </section>
 </template>
 
@@ -10,12 +11,14 @@
 import Year2007 from "./components/years/Year2007";
 import Year2009 from "./components/years/Year2009";
 import Year2010 from "./components/years/Year2010";
+import Year2011 from "./components/years/Year2011";
 
 export default {
   components: {
     Year2007,
     Year2009,
     Year2010,
+    Year2011,
   },
 };
 </script>

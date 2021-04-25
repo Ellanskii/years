@@ -16,17 +16,19 @@ export default {
       required: true,
     },
     elevation: {
-      type: [String, Number],
+      type: Number,
       default: 0,
     },
   },
 
   computed: {
     transform() {
-      return `translateZ(${
-        isNaN(this.elevation) ? this.elevation : this.elevation * 10 + "px"
-      })`;
-    },
+      if (this.elevation) {
+        return `translateZ(${this.elevation * 10}px)`
+      } else {
+        return {}
+      }
+    }
   },
 };
 </script>
@@ -42,5 +44,8 @@ export default {
   />
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.volumeCardLayer {
+  pointer-events: none;
+}
 </style>
