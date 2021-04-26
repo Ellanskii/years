@@ -3,6 +3,7 @@ import Year2007 from "./components/years/Year2007";
 import Year2009 from "./components/years/Year2009";
 import Year2010 from "./components/years/Year2010";
 import Year2011 from "./components/years/Year2011";
+import Year2012 from "./components/years/Year2012";
 
 import { debounce } from "lodash";
 
@@ -12,6 +13,7 @@ export default {
     Year2009,
     Year2010,
     Year2011,
+    Year2012,
   },
 
   data: () => ({
@@ -39,10 +41,11 @@ export default {
 
 <template>
   <section class="yearsContainer">
-    <Year2007 :width="cardWidth" :height="cardHeight" />
-    <Year2009 :width="cardWidth" :height="cardHeight" />
-    <Year2010 :width="cardWidth" :height="cardHeight" />
-    <Year2011 :width="cardWidth" :height="cardHeight" />
+    <Year2007 :width="cardWidth" :height="cardHeight" :style="{ background: '#ac022d' }" />
+    <Year2009 :width="cardWidth" :height="cardHeight" :style="{ background: '#f8bd41' }" />
+    <Year2010 :width="cardWidth" :height="cardHeight" :style="{ background: '#00baab' }" />
+    <Year2011 :width="cardWidth" :height="cardHeight" :style="{ background: '#ee406e' }" />
+    <Year2012 :width="cardWidth" :height="cardHeight" :style="{ background: '#e04f3c' }" />
   </section>
 </template>
 
