@@ -172,20 +172,23 @@ export default {
 <template>
   <figure
     class="volumeCard"
+    :style="wrapperStyle"
     @mousemove="mouseMove"
     @mouseenter="cardEnter"
     @mouseleave="cardLeave"
     @touchmove.stop="touchMove"
     @touchstart.stop="touchStart"
     @touchend="touchEnd"
-    :style="wrapperStyle"
   >
-    <slot name="background"></slot>
-    <div class="inner" :style="{ transform: transformed && transform }">
-      <slot name="default"></slot>
+    <slot name="background" />
+    <div
+      class="inner"
+      :style="{ transform: transformed && transform }"
+    >
+      <slot name="default" />
     </div>
     <figcaption>
-      <slot name="caption"></slot>
+      <slot name="caption" />
     </figcaption>
   </figure>
 </template>

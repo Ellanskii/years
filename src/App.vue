@@ -4,6 +4,7 @@ import Year2009 from "./components/years/Year2009";
 import Year2010 from "./components/years/Year2010";
 import Year2011 from "./components/years/Year2011";
 import Year2012 from "./components/years/Year2012";
+import Year2014 from "./components/years/Year2014";
 
 import { debounce } from "lodash";
 
@@ -14,6 +15,7 @@ export default {
     Year2010,
     Year2011,
     Year2012,
+    Year2014
   },
 
   data: () => ({
@@ -26,26 +28,51 @@ export default {
     },
   },
 
+  mounted() {
+    this.setCardWidth();
+    window.addEventListener("resize", debounce(this.setCardWidth, 100));
+  },
+
   methods: {
     setCardWidth() {
       this.cardWidth = document.querySelector(".volumeCard").clientWidth;
     },
-  },
-
-  mounted() {
-    this.setCardWidth();
-    window.addEventListener("resize", debounce(this.setCardWidth, 100));
   },
 };
 </script>
 
 <template>
   <section class="yearsContainer">
-    <Year2007 :width="cardWidth" :height="cardHeight" :style="{ background: '#ac022d' }" />
-    <Year2009 :width="cardWidth" :height="cardHeight" :style="{ background: '#f8bd41' }" />
-    <Year2010 :width="cardWidth" :height="cardHeight" :style="{ background: '#00baab' }" />
-    <Year2011 :width="cardWidth" :height="cardHeight" :style="{ background: '#ee406e' }" />
-    <Year2012 :width="cardWidth" :height="cardHeight" :style="{ background: '#e04f3c' }" />
+    <Year2007
+      :width="cardWidth"
+      :height="cardHeight"
+      :style="{ background: '#ac022d' }"
+    />
+    <Year2009
+      :width="cardWidth"
+      :height="cardHeight"
+      :style="{ background: '#f8bd41' }"
+    />
+    <Year2010
+      :width="cardWidth"
+      :height="cardHeight"
+      :style="{ background: '#00baab' }"
+    />
+    <Year2011
+      :width="cardWidth"
+      :height="cardHeight"
+      :style="{ background: '#ee406e' }"
+    />
+    <Year2012
+      :width="cardWidth"
+      :height="cardHeight"
+      :style="{ background: '#e04f3c' }"
+    />
+    <Year2014
+      :width="cardWidth"
+      :height="cardHeight"
+      :style="{ background: '#b563a3' }"
+    />
   </section>
 </template>
 

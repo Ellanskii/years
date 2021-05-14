@@ -38,7 +38,10 @@ export default {
 </script>
 
 <template>
-    <VolumeCard :width="width" :height="height">
+  <VolumeCard
+    :width="width"
+    :height="height"
+  >
     <template #background>
       <VolumeCardLayer
         src="/cards/2010/background.png"

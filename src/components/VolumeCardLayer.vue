@@ -41,7 +41,7 @@ export default {
     :height="height"
     class="volumeCardLayer"
     :style="{ transform }"
-  />
+  >
 </template>
 
 <style lang="scss" scoped>
