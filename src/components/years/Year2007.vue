@@ -10,12 +10,23 @@ export default {
     VolumeCardLayer,
   },
 
+  props: {
+    width: {
+      type: Number,
+      default: 360,
+    },
+    height: {
+      type: Number,
+      default: 640,
+    },
+  },
+
   data: () => ({
     layers: [
-      { name: "stars", elevation: -10 },
-      { name: "frame", elevation: 1 },
       { name: "girl", elevation: -8 },
       { name: "blazer", elevation: -4 },
+      { name: "frame", elevation: 1 },
+      { name: "stars", elevation: 10 },
     ],
   }),
 };
@@ -24,13 +35,19 @@ export default {
 <template>
   <VolumeCard>
     <template #background>
-      <VolumeCardLayer src="/cards/2007/background.png" />
+      <VolumeCardLayer
+        :width="width"
+        :height="height"
+        src="/cards/2007/background.png"
+      />
     </template>
     <VolumeCardLayer
       v-for="(layer, index) in layers"
       :key="index"
       :src="`/cards/2007/${layer.name}.png`"
       :elevation="layer.elevation"
+      :width="width"
+      :height="height"
     />
   </VolumeCard>
 </template>

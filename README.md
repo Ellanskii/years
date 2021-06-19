@@ -1,29 +1,3 @@
-# years
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Years
+челлендж такой – ника каждый день рисует картинку про один год из своей жизни. если пропускает – качает жёппу.
+добавил [немного интерактива](https://ellanskii.github.io/years/).
